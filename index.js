@@ -38,12 +38,27 @@ function Airplane(name) {
       - Give instances of Person a method `.toString()`:
           + It should return a string with `name` and `age`. Example: "Mary, 50"
   */
+ 
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
+    }
+   
+   
+  Person.prototype.eat = function(edible) {
+      if(this.stomach.length < 10) {
+        this.stomach.push(edible);
+      }
+   }
   
- function Person() {//alteration for first push
-    
-  }
- 
- 
+    Person.prototype.poop = function () {
+      this.stomach = [];
+    }
+  
+    Person.prototype.toString = function () {
+      return `${this.name}, ${this.age}`;
+    }
 
   
   
@@ -63,10 +78,16 @@ function Airplane(name) {
           + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
   */
   
- function Car() {
-    
+ function Car(model, milesPerGallon) {
+   this.model = model;
+   this.milesPerGallon = milesPerGallon;
+   this.tank = 0;
+   this.odometer = 0;
   }
   
+  Car.prototype.fill = function(gallons){
+    this.tank = this.tank + gallons;
+  }
   
   /*
     TASK 3
@@ -75,18 +96,23 @@ function Airplane(name) {
       - Besides the methods on Person.prototype, babies have the ability to `.play()`:
           + Should return a string "Playing with x", x being the favorite toy.
   */
- function Baby() {
-   
+ function Baby(name, age, favoriteToy) {
+   Person.call(this, name, age);
+   this.favoriteToy = favoriteToy;
   }
- 
+ Baby.prototype = Object.create(Person.prototype);
+ Baby.prototype.play = function(){
+   return `Playing with ${this.favoriteToy}`;
+ }
+
   
   /* 
     TASK 4
     In your own words explain the four principles for the "this" keyword below:
-    1. 
-    2. 
-    3. 
-    4. 
+    1. Window/Global Binding - 'this' will bind with the global object when there is no other object for it to bind to.
+    2. Implicit Binding - when referencing a key contained within an object, the function will look for the object that contains the function to use in the 'this'. position.
+    3. New Binding - when using a constructor function, the 'this' will refer to the object that is created by the constructor function.
+    4. Explicit Binding - uses .call, .apply, and .bind to assign the 'this' to a specific object.
   */
   
   
